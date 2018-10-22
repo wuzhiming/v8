@@ -4773,9 +4773,9 @@ void Heap::TearDown() {
 void Heap::AddGCPrologueCallback(v8::Isolate::GCCallbackWithData callback,
                                  GCType gc_type, void* data) {
   DCHECK_NOT_NULL(callback);
-  DCHECK(gc_prologue_callbacks_.end() ==
-         std::find(gc_prologue_callbacks_.begin(), gc_prologue_callbacks_.end(),
-                   GCCallbackTuple(callback, gc_type, data)));
+//  DCHECK(gc_prologue_callbacks_.end() ==
+//         std::find(gc_prologue_callbacks_.begin(), gc_prologue_callbacks_.end(),
+//                   GCCallbackTuple(callback, gc_type, data)));
   gc_prologue_callbacks_.emplace_back(callback, gc_type, data);
 }
 
