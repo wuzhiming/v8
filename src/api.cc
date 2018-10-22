@@ -512,6 +512,10 @@ void V8::SetSnapshotDataBlob(StartupData* snapshot_blob) {
   i::V8::SetSnapshotBlob(snapshot_blob);
 }
 
+void* v8::ArrayBuffer::Allocator::Realloc(void* data, size_t length) {
+  UNIMPLEMENTED();
+}
+
 namespace {
 
 class ArrayBufferAllocator : public v8::ArrayBuffer::Allocator {

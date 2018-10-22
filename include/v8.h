@@ -4612,6 +4612,13 @@ class V8_EXPORT ArrayBuffer : public Object {
 
     /**
      * Free the memory block of size |length|, pointed to by |data|.
+     * That memory must be previously allocated by |Allocate| and not yet freed
+     * with a call to |Free| or |Realloc|
+     */
+    virtual void* Realloc(void* data, size_t length);
+
+    /**
+     * Free the memory block of size |length|, pointed to by |data|.
      * That memory is guaranteed to be previously allocated by |Allocate|.
      */
     virtual void Free(void* data, size_t length) = 0;
