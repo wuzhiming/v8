@@ -236,7 +236,7 @@ config("internal_config") {
 
   configs = [ "//build/config/compiler:wexit_time_destructors" ]
 
-  if (is_component_build) {
+  if (is_component_build || is_electron_build) {
     defines = [ "BUILDING_V8_SHARED" ]
   }
 }
@@ -3386,6 +3386,8 @@ if (v8_use_snapshot && current_toolchain == v8_snapshot_toolchain) {
     ]
 
     configs = [ ":internal_config" ]
+
+    configs += [ "//electron/build/config:build_time_executable" ]
 
     deps = [
       ":v8_base",
