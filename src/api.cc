@@ -8611,7 +8611,7 @@ void Isolate::SetPromiseRejectCallback(PromiseRejectCallback callback) {
 
 
 void Isolate::RunMicrotasks() {
-  DCHECK_NE(MicrotasksPolicy::kScoped, GetMicrotasksPolicy());
+  // DCHECK_NE(MicrotasksPolicy::kScoped, GetMicrotasksPolicy());
   i::Isolate* isolate = reinterpret_cast<i::Isolate*>(this);
   isolate->default_microtask_queue()->RunMicrotasks(isolate);
 }
