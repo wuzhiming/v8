@@ -1242,8 +1242,18 @@ if (v8_use_snapshot && v8_use_external_startup_data) {
     ]
     public_deps = [
       ":natives_blob",
-      ":run_mksnapshot_default",
     ]
+
+    if (v8_snapshot_toolchain == "//build/toolchain/linux:clang_arm" ||
+        v8_snapshot_toolchain == "//build/toolchain/linux:clang_arm64") {
+      public_deps += [
+        ":mksnapshot($v8_snapshot_toolchain)",
+      ]
+    } else {
+      public_deps += [
+        ":run_mksnapshot_default",
+      ]
+    }
 
     if (v8_use_multi_snapshots) {
       public_deps += [ ":run_mksnapshot_trusted" ]
