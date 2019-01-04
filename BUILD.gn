@@ -184,7 +184,9 @@ declare_args() {
 
 v8_generator_toolchain = v8_snapshot_toolchain
 if (host_cpu == "x64" &&
-    (v8_current_cpu == "mips" || v8_current_cpu == "mips64")) {
+    (v8_current_cpu == "mips" || v8_current_cpu == "mips64" ||
+     v8_snapshot_toolchain == "//build/toolchain/linux:clang_arm" ||
+     v8_snapshot_toolchain == "//build/toolchain/linux:clang_arm64")) {
   v8_generator_toolchain = "//build/toolchain/linux:clang_x64"
 }
 
@@ -3402,7 +3404,7 @@ if (v8_use_snapshot && current_toolchain == v8_snapshot_toolchain) {
   }
 }
 
-if (current_toolchain == v8_snapshot_toolchain) {
+if (current_toolchain == v8_generator_toolchain) {
   v8_executable("torque") {
     visibility = [ ":*" ]  # Only targets in this file can depend on this.
 
