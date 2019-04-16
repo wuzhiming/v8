@@ -410,7 +410,7 @@ config("internal_config") {
     ":v8_header_features",
   ]
 
-  if (is_component_build) {
+  if (is_component_build || is_electron_build) {
     defines += [ "BUILDING_V8_SHARED" ]
   }
 }
@@ -4477,7 +4477,7 @@ if (current_toolchain == v8_generator_toolchain) {
       "src/interpreter/bytecodes.h",
     ]
 
-    configs = [ ":internal_config" ]
+    configs = [ ":internal_config_base" ]
 
     deps = [
       ":v8_libbase",
@@ -4513,6 +4513,8 @@ if (current_toolchain == v8_snapshot_toolchain) {
     }
 
     configs = [ ":internal_config" ]
+
+    configs += [ "//electron/build/config:build_time_executable" ]
 
     deps = [
       ":v8_base_without_compiler",
