@@ -60,7 +60,7 @@ namespace internal {
 //                      of the removed holes.
 //   [kPrefixSize + 3 + NumberOfRemovedHoles()..length]: Not used
 template <class Derived, int entrysize>
-class OrderedHashTable : public FixedArray {
+class V8_EXPORT_PRIVATE OrderedHashTable : public FixedArray {
  public:
   // Returns an OrderedHashTable (possibly |table|) with enough space
   // to add at least one new element.

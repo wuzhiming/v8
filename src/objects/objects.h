@@ -812,7 +812,7 @@ enum class KeyCollectionMode {
 // Utility superclass for stack-allocated objects that must be updated
 // on gc.  It provides two ways for the gc to update instances, either
 // iterating or updating after gc.
-class Relocatable {
+class V8_EXPORT_PRIVATE Relocatable {
  public:
   explicit inline Relocatable(Isolate* isolate);
   inline virtual ~Relocatable();
