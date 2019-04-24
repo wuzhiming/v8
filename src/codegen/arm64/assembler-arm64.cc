@@ -3600,6 +3600,22 @@ void Assembler::MoveWide(const Register& rd, uint64_t imm, int shift,
        ImmMoveWide(static_cast<int>(imm)) | ShiftMoveWide(shift));
 }
 
+Instr Assembler::RmNot31(CPURegister rm) {
+  DCHECK_NE(rm.code(), kSPRegInternalCode);
+  DCHECK(!rm.IsZero());
+  return Rm(rm);
+}
+
+Instr Assembler::RdSP(Register rd) {
+  DCHECK(!rd.IsZero());
+  return (rd.code() & kRegCodeMask) << Rd_offset;
+}
+
+Instr Assembler::RnSP(Register rn) {
+  DCHECK(!rn.IsZero());
+  return (rn.code() & kRegCodeMask) << Rn_offset;
+}
+
 void Assembler::AddSub(const Register& rd, const Register& rn,
                        const Operand& operand, FlagsUpdate S, AddSubOp op) {
   DCHECK_EQ(rd.SizeInBits(), rn.SizeInBits());

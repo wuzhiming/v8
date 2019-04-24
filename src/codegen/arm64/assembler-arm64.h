@@ -2095,11 +2095,7 @@ class V8_EXPORT_PRIVATE Assembler : public AssemblerBase {
     return rm.code() << Rm_offset;
   }
 
-  static Instr RmNot31(CPURegister rm) {
-    DCHECK_NE(rm.code(), kSPRegInternalCode);
-    DCHECK(!rm.IsZero());
-    return Rm(rm);
-  }
+  static Instr RmNot31(CPURegister rm);
 
   static Instr Ra(CPURegister ra) {
     DCHECK_NE(ra.code(), kSPRegInternalCode);
@@ -2123,15 +2119,8 @@ class V8_EXPORT_PRIVATE Assembler : public AssemblerBase {
 
   // These encoding functions allow the stack pointer to be encoded, and
   // disallow the zero register.
-  static Instr RdSP(Register rd) {
-    DCHECK(!rd.IsZero());
-    return (rd.code() & kRegCodeMask) << Rd_offset;
-  }
-
-  static Instr RnSP(Register rn) {
-    DCHECK(!rn.IsZero());
-    return (rn.code() & kRegCodeMask) << Rn_offset;
-  }
+  static Instr RdSP(Register rd);
+  static Instr RnSP(Register rn);
 
   // Flags encoding.
   inline static Instr Flags(FlagsUpdate S);
