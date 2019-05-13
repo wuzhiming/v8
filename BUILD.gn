@@ -410,6 +410,10 @@ config("internal_config") {
     ":v8_header_features",
   ]
 
+  if (!is_component_build && is_electron_build) {
+    defines += [ "HIDE_PRIVATE_SYMBOLS" ]
+  }
+
   if (is_component_build || is_electron_build) {
     defines += [ "BUILDING_V8_SHARED" ]
   }
