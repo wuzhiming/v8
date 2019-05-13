@@ -415,13 +415,17 @@ bool is_inbounds(float_t v) {
 #ifdef V8_OS_WIN
 
 // Setup for Windows shared library export.
+#if defined(HIDE_PRIVATE_SYMBOLS)
+#define V8_EXPORT_PRIVATE
+#else //if !defined(HIDE_PRIVATE_SYMBOLS)
 #ifdef BUILDING_V8_SHARED
 #define V8_EXPORT_PRIVATE __declspec(dllexport)
 #elif USING_V8_SHARED
 #define V8_EXPORT_PRIVATE __declspec(dllimport)
-#else
+#else //!(BUILDING_V8_SHARED || USING_V8_SHARED)
 #define V8_EXPORT_PRIVATE
-#endif  // BUILDING_V8_SHARED
+#endif
+#endif
 
 #else  // V8_OS_WIN
 

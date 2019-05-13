@@ -229,6 +229,7 @@ v8_toolset_for_shell = "host"
 # Configurations
 #
 config("internal_config") {
+  defines = []
   visibility = [ ":*" ]  # Only targets in this file can depend on this.
 
   include_dirs = [
@@ -238,8 +239,12 @@ config("internal_config") {
 
   configs = [ "//build/config/compiler:wexit_time_destructors" ]
 
+  if (!is_component_build && is_electron_build) {
+    defines += [ "HIDE_PRIVATE_SYMBOLS" ]
+  }
+
   if (is_component_build || is_electron_build) {
-    defines = [ "BUILDING_V8_SHARED" ]
+    defines += [ "BUILDING_V8_SHARED" ]
   }
 }
 
