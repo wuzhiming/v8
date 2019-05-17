@@ -923,8 +923,16 @@ Response V8DebuggerAgentImpl::getScriptSource(const String16& scriptId,
   ScriptsMap::iterator it = m_scripts.find(scriptId);
   if (it == m_scripts.end())
     return Response::Error("No script for id: " + scriptId);
-  *scriptSource = it->second->source(0);
-  return Response::OK();
+
+  //判断下如果路径带asar的，就直接不返回内容给devtools
+  auto sourceURL = it->second->sourceURL(); 
+  int idx = (int)sourceURL.find(".asar");
+  if (idx == -1) {
+    *scriptSource = it->second->source(0);
+    return Response::OK();
+  } else {
+    return Response::Error(kDebuggerNotEnabled);
+  }
 }
 
 void V8DebuggerAgentImpl::pushBreakDetails(
