@@ -391,10 +391,13 @@
 # define V8_NOINLINE /* NOT SUPPORTED */
 #endif
 
-
 // A macro (V8_DEPRECATED) to mark classes or functions as deprecated.
 #if defined(V8_DEPRECATION_WARNINGS)
-# define V8_DEPRECATED(message) [[deprecated(message)]]
+# if defined(_MSC_VER) && _MSC_VER <= 1900
+#   define V8_DEPRECATED(message) __declspec(deprecated(message))
+# else
+#   define V8_DEPRECATED(message) [[deprecated(message)]]
+# endif
 #else
 # define V8_DEPRECATED(message)
 #endif
@@ -402,7 +405,11 @@
 
 // A macro (V8_DEPRECATE_SOON) to make it easier to see what will be deprecated.
 #if defined(V8_IMMINENT_DEPRECATION_WARNINGS)
-# define V8_DEPRECATE_SOON(message) [[deprecated(message)]]
+# if defined(_MSC_VER) && _MSC_VER <= 1900
+#   define V8_DEPRECATE_SOON(message) __declspec(deprecated(message))
+# else
+#   define V8_DEPRECATE_SOON(message) [[deprecated(message)]]
+# endif
 #else
 # define V8_DEPRECATE_SOON(message)
 #endif
