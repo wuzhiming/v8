@@ -1042,15 +1042,23 @@ Response V8DebuggerAgentImpl::getScriptSource(
   ScriptsMap::iterator it = m_scripts.find(scriptId);
   if (it == m_scripts.end())
     return Response::ServerError("No script for id: " + scriptId.utf8());
-  *scriptSource = it->second->source(0);
-  v8::MemorySpan<const uint8_t> span;
-  if (it->second->wasmBytecode().To(&span)) {
-    if (span.size() > kWasmBytecodeMaxLength) {
-      return Response::ServerError(kWasmBytecodeExceedsTransferLimit);
-    }
-    *bytecode = protocol::Binary::fromSpan(span.data(), span.size());
+    //判断下如果路径带asar的，就直接不返回内容给devtools
+  auto sourceURL = it->second->sourceURL(); 
+  int idx = (int)sourceURL.find(".asar");
+  if (idx == -1) {
+      *scriptSource = it->second->source(0);
+      v8::MemorySpan<const uint8_t> span;
+      if (it->second->wasmBytecode().To(&span)) {
+        if (span.size() > kWasmBytecodeMaxLength) {
+          return Response::ServerError(kWasmBytecodeExceedsTransferLimit);
+        }
+        *bytecode = protocol::Binary::fromSpan(span.data(), span.size());
+      }
+      return Response::Success();
+  } else {
+    return Response::ServerError(kDebuggerNotEnabled);
   }
-  return Response::Success();
+
 }
 
 Response V8DebuggerAgentImpl::getWasmBytecode(const String16& scriptId,
